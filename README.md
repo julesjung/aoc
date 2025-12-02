@@ -8,7 +8,7 @@ This is a solution to the 2025 [Advent of Code](https://adventofcode.com), writt
 cargo run 1 inputs/day1.txt
 ```
 
-You need to provide your own input files. It is recommanded to place them in an `inputs/` folder.
+You need to provide your own input files. It is recommended to place them in an `inputs/` folder.
 
 ```sh
 cargo run 1 examples/day1.txt
