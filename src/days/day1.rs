@@ -1,40 +1,41 @@
 use std::io::{self, BufRead};
 
-use crate::utils::{Codes, read};
+use crate::utils::{Answers, read};
 
-pub fn run(input: &str) -> io::Result<Codes> {
+pub fn run(input: &str) -> io::Result<Answers> {
     let input = read(input)?;
 
-    let mut part1: i32 = 0;
-    let mut part2: i32 = 0;
-    let mut rotation: i32 = 50;
-    let mut inverse_rotation: i32 = 50;
+    let mut part1: u32 = 0;
+    let mut part2: u32 = 0;
+    let mut rotation: u32 = 50;
+    let mut inverse_rotation: u32 = 50;
 
     for line in input.lines() {
         let instruction = line.unwrap();
 
         let prefix = instruction.chars().next().unwrap();
-        let distance = instruction[1..].parse::<i32>().unwrap();
+        let distance = instruction[1..].parse::<u32>().unwrap();
 
-        let new_rotation = match prefix {
+        match prefix {
             'L' => {
-                part2 += (inverse_rotation + distance) / 100;
-                rotation - distance
+                inverse_rotation += distance;
+                part2 += inverse_rotation / 100;
+                inverse_rotation %= 100;
+                rotation = (100 - inverse_rotation) % 100;
             }
             'R' => {
-                part2 += (rotation + distance) / 100;
-                rotation + distance
+                rotation += distance;
+                part2 += rotation / 100;
+                rotation %= 100;
+                inverse_rotation = (100 - rotation) % 100;
             }
             _ => unreachable!(),
         };
-
-        rotation = new_rotation.rem_euclid(100);
-        inverse_rotation = (-new_rotation).rem_euclid(100);
 
         if rotation == 0 {
             part1 += 1;
         };
     }
 
-    Ok(Codes::new(Some(part1), Some(part2)))
+    Ok((Some(part1 as u64), Some(part2 as u64)))
 }
