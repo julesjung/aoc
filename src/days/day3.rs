@@ -2,31 +2,10 @@ use std::io::{self, BufRead};
 
 use crate::utils::{Answers, read};
 
-#[inline]
-fn part1_joltage(rating: &str) -> u32 {
-    let mut first_digit = '0';
-    let mut last_digit = '0';
-    for digit in rating.chars() {
-        if first_digit < last_digit {
-            first_digit = last_digit;
-            last_digit = digit;
-        } else if last_digit < digit {
-            last_digit = digit;
-        }
-    }
-
-    let first_digit = first_digit.to_digit(10).unwrap();
-    let last_digit = last_digit.to_digit(10).unwrap();
-
-    first_digit * 10 + last_digit
-}
-
-#[inline]
-fn part2_joltage(rating: &str) -> u64 {
-    let mut digits: [char; 12] = ['0'; 12];
+fn find_greatest_combination(rating: &str, digits: &mut [char]) {
     for (index, digit) in rating.chars().enumerate() {
-        let mut current_index = (12 + index).saturating_sub(rating.len());
-        while current_index < 12 {
+        let mut current_index = (digits.len() + index).saturating_sub(rating.len());
+        while current_index < digits.len() {
             if digits[current_index] < digit {
                 digits[current_index] = digit;
                 for item in digits.iter_mut().skip(current_index + 1) {
@@ -37,23 +16,37 @@ fn part2_joltage(rating: &str) -> u64 {
             current_index += 1;
         }
     }
+}
 
-    let joltage: String = digits.iter().collect();
+#[inline]
+fn joltage(rating: &str) -> (u64, u64) {
+    let mut part1_digits = ['0'; 2];
+    let mut part2_digits = ['0'; 12];
 
-    joltage.parse().unwrap()
+    find_greatest_combination(rating, &mut part1_digits);
+    find_greatest_combination(rating, &mut part2_digits);
+
+    let part1_joltage: String = part1_digits.iter().collect();
+    let part2_joltage: String = part2_digits.iter().collect();
+
+    (
+        part1_joltage.parse().unwrap(),
+        part2_joltage.parse().unwrap(),
+    )
 }
 
 pub fn run(input: &str) -> io::Result<Answers> {
     let input = read(input)?;
 
-    let mut part1: u32 = 0;
+    let mut part1: u64 = 0;
     let mut part2: u64 = 0;
 
     for line in input.lines() {
         let rating = line.unwrap();
-        part1 += part1_joltage(rating.as_str());
-        part2 += part2_joltage(rating.as_str());
+        let joltages = joltage(rating.as_str());
+        part1 += joltages.0;
+        part2 += joltages.1;
     }
 
-    Ok((Some(part1 as u64), Some(part2)))
+    Ok((Some(part1), Some(part2)))
 }
