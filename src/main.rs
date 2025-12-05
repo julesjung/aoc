@@ -21,14 +21,8 @@ fn main() -> io::Result<()> {
 
     let elapsed = start.elapsed();
 
-    if let Some(part1) = part1 {
-        println!("Part 1: {}", part1);
-    }
-
-    if let Some(part2) = part2 {
-        println!("Part 2: {}", part2);
-    }
-
+    println!("Part 1: {}", part1);
+    println!("Part 2: {}", part2);
     println!("Total time: {:?}", elapsed);
 
     Ok(())

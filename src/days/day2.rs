@@ -1,7 +1,5 @@
 use std::{fs::read_to_string, io};
 
-use crate::utils::Answers;
-
 fn part1_invalid(id: &str) -> bool {
     let (first_half, second_half) = id.split_at(id.len() / 2);
 
@@ -28,7 +26,7 @@ fn part2_invalid(id: &str) -> bool {
     false
 }
 
-pub fn run(input: &str) -> io::Result<Answers> {
+pub fn run(input: &str) -> io::Result<(u64, u64)> {
     let input = read_to_string(input)?;
     let mut part1: u64 = 0;
     let mut part2: u64 = 0;
@@ -48,5 +46,5 @@ pub fn run(input: &str) -> io::Result<Answers> {
         }
     }
 
-    Ok((Some(part1), Some(part2)))
+    Ok((part1, part2))
 }

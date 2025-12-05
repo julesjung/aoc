@@ -5,5 +5,3 @@ pub fn read(input: &str) -> io::Result<io::BufReader<File>> {
     let reader = io::BufReader::new(input);
     Ok(reader)
 }
-
-pub type Answers = (Option<u64>, Option<u64>);

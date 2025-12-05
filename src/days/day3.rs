@@ -1,6 +1,6 @@
 use std::io::{self, BufRead};
 
-use crate::utils::{Answers, read};
+use crate::utils::read;
 
 fn find_greatest_combination(rating: &str, digits: &mut [char]) {
     for (index, digit) in rating.chars().enumerate() {
@@ -35,7 +35,7 @@ fn joltage(rating: &str) -> (u64, u64) {
     )
 }
 
-pub fn run(input: &str) -> io::Result<Answers> {
+pub fn run(input: &str) -> io::Result<(u64, u64)> {
     let input = read(input)?;
 
     let mut part1: u64 = 0;
@@ -48,5 +48,5 @@ pub fn run(input: &str) -> io::Result<Answers> {
         part2 += joltages.1;
     }
 
-    Ok((Some(part1), Some(part2)))
+    Ok((part1, part2))
 }

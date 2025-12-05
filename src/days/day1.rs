@@ -1,8 +1,8 @@
 use std::io::{self, BufRead};
 
-use crate::utils::{Answers, read};
+use crate::utils::read;
 
-pub fn run(input: &str) -> io::Result<Answers> {
+pub fn run(input: &str) -> io::Result<(u64, u64)> {
     let input = read(input)?;
 
     let mut part1: u32 = 0;
@@ -37,5 +37,5 @@ pub fn run(input: &str) -> io::Result<Answers> {
         };
     }
 
-    Ok((Some(part1 as u64), Some(part2 as u64)))
+    Ok((part1 as u64, part2 as u64))
 }
