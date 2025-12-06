@@ -3,6 +3,7 @@ pub mod day2;
 pub mod day3;
 pub mod day4;
 pub mod day5;
+pub mod day6;
 
 use std::io;
 
@@ -13,6 +14,7 @@ pub fn run(day: u8, input: &str) -> io::Result<(u64, u64)> {
         3 => day3::run(input),
         4 => day4::run(input),
         5 => day5::run(input),
+        6 => day6::run(input),
         _ => unimplemented!(),
     }
 }
